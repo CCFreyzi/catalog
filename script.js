@@ -114,3 +114,14 @@ const renderBlocks = () => {
 
 // Викликаємо функцію при завантаженні скрипта
 renderBlocks();
+
+// Масштабування сторінок пропорційно до ширини екрана (зберігає A4-пропорції)
+function applyPageZoom() {
+    var scale = Math.min(window.innerWidth / 1000, 1);
+    document.querySelectorAll('.container').forEach(function(el) {
+        el.style.zoom = scale;
+    });
+}
+
+window.addEventListener('resize', applyPageZoom);
+applyPageZoom();

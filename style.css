@@ -8,20 +8,22 @@ body {
     font-family: Arial, sans-serif;
     color: #1a1a1a;
     background-color: #f9f9f9;
-    /* Прибрано жорстке overflow: hidden з body, керуємо висотою в контейнері */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 1000px;
+    margin: 0;
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     display: flex;
     flex-direction: column;
 
-    /* Жорстка висота для десктопу */
-    height: 100vh;
+    /* A4 пропорції: 210×297мм → 1000px × 1414px */
+    height: 1414px;
     overflow: hidden;
 }
 
@@ -145,24 +147,36 @@ body {
 
 /* Адаптивність для планшетів та мобільних */
 @media (max-width: 768px) {
-    .container {
+    /* Сторінки з товарами ростуть по контенту; обкладинка і фінал зберігають A4 */
+    .container:not(.cover-page):not(.final-page) {
         height: auto;
-        /* Дозволяємо контейнеру розтягуватись */
-        min-height: 100vh;
-        /* Мінімум на весь екран */
         overflow: visible;
-        /* Повертаємо скрол */
     }
 
     .main-image-wrapper {
-        min-height: 40vh;
-        /* На мобільному картинка займає мінімум 40% екрана */
+        flex: 0 0 900px;
+        min-height: unset;
     }
 
     .products-section {
-        flex-direction: column;
-        justify-content: center;
+        /* flex-direction: column; */
+        justify-content: space-around;
         align-items: center;
+        padding: 15px 40px;
+        gap: 10px;
+    }
+
+    .product-image {
+        max-height: 90px;
+        margin-bottom: 10px;
+    }
+
+    .product-title {
+        margin-bottom: 4px;
+    }
+
+    .product-specs {
+        margin-bottom: 8px;
     }
 }
 
@@ -193,18 +207,12 @@ body {
 /* --- СТИЛІ ДЛЯ ПЕРШОЇ СТОРІНКИ (ОБКЛАДИНКИ) --- */
 
 .cover-page {
-    height: 100vh;
-    /* Жорстка висота на весь екран */
     background-image: url('./images/h1.jpeg');
-    /* Шлях до вашої фонової картинки */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-
-    /* Використовуємо flexbox для рознесення логотипу вгору, а тексту вниз */
     justify-content: space-between;
     padding: 0;
-    /* Прибираємо можливі паддінги, щоб стрічки тексту йшли від краю до краю контейнера */
 }
 
 .cover-logo {
@@ -246,10 +254,7 @@ body {
 /* --- СТИЛІ ДЛЯ ФІНАЛЬНОЇ СТОРІНКИ --- */
 
 .final-page {
-    height: 100vh;
     background-color: #000000;
-    
-    /* Використовуємо Flexbox для центрування всього контенту */
     display: flex;
     flex-direction: column;
     justify-content: center;
